@@ -64,15 +64,18 @@ def run_DBSCAN_jobs(x_features: pd.DataFrame, *, eps_min=1.0, eps_max=2.5, eps_s
 
     return results
 
-
-def get_silh_score(x_features, labels, **kwargs):
-    score = sklearn.metrics.silhouette_score(x_features, labels, **kwargs)
-
 def get_silh_scores(x_features, models, **kwargs):
     """
     Helper Function to compute all silhouette scores of a model's labels
     """
     scores = dict()
-    for model, labels in models:
-        scores[model] = get_silh_score(x_features, labels)
+    for model, labels in models: # This is pretty slow, so I might see about multithreading this/using joblib in the future
+        scores[model] = sklearn.metrics.silhouette_score(x_features, labels, **kwargs)
     return scores
+
+def get_calinsky_harabasz_scores(x_features, models):
+    scores = dict()
+    for model, labels in models:
+        scores[model] = sklearn.metrics.calinski_harabasz_score(x_features, labels)
+    return scores
+
