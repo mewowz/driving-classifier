@@ -89,4 +89,9 @@ def make_features_clustering(df: pd.DataFrame, window_sz: int = 20) -> pd.DataFr
 
     return pd.DataFrame(windows)
 
-
+def get_upper_corr_matrix(df: pd.DataFrame):
+    """
+        Function to fetch and return the upper correlation matrix of a dataframe
+    """
+    corr = df.corr()
+    upper_corr = corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool))
