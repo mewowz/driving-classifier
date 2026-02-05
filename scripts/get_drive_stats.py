@@ -116,6 +116,8 @@ def parse_opts():
             raise
 
         DRIVE_FILE = p
+    else:
+        pass # DRIVE_FILE is already set by default at runtime
 
 def poll_obd(obd_conn):
     RPM = obd_conn.query(obd.commands.RPM)
